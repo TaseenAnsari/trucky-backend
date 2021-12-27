@@ -24,7 +24,7 @@ app.use('/api/auth',auth)
 
 
 app.get('/api/:name',async(req , res , next)=>{
-    res.sendFile(__dirname+'/uploads/'+req.params.name)
+     return res.sendFile(__dirname+'/uploads/'+req.params.name)
 })
 
 //handle all routes error

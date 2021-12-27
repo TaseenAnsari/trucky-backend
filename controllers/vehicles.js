@@ -7,8 +7,13 @@ const { vehicleModel } = require('../models/vehicles.model')
 
 module.exports.getVehicles = async (req, res, next) => {
     try {
+        let sort = req.query.sort;
+        let cat = {type:req.query.type}
         if (req.params.id) return res.send(await vehicleModel.find({ _id: req.params.id }))
-        return res.send(await vehicleModel.find({}))
+        if(req.query.sort){
+            return res.send(await vehicleModel.find(cat).sort(sort))
+        }
+        return res.send(await vehicleModel.find(cat))
     }
     catch (err) {
         next(err)
