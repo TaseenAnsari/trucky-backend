@@ -1,11 +1,12 @@
 const mongoose = require('mongoose')
-
+const config = require('config')
 
 
 module.exports = async()=>{
-    mongoose.connect('mongodb+srv://taseenansari:taseen12345@cluster0.2o2yq.mongodb.net/trucky')
+    mongoose.connect(config.get('db'))
     .then(()=>console.log("successfuly connected to mongodb"))
     .catch((err)=>console.log(err.message))
     }
+
 
 

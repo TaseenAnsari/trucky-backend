@@ -1,5 +1,9 @@
 const { vehicleModel } = require('../models/vehicles.model')
-
+const config = require('config')
+var aws = require('aws-sdk')
+var express = require('express')
+var multer = require('multer')
+var multerS3 = require('multer-s3')
 
 
 
@@ -64,3 +68,24 @@ module.exports.updateVehicle = async (payload,req, res, next) => {
         next(err)
     }
 }
+
+
+
+var app = express()
+var s3 = new aws.S3({
+    accessKeyId:config.get('awsId'),
+    secretAccessKey:config.get('awsKey')
+})
+
+module.exports.uploads = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'truckytruck',
+    metadata: function (req, file, cb) {
+      cb(null, {fieldName: file.fieldname});
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now()+file.originalname)
+    }
+  })
+})
