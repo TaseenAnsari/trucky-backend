@@ -38,6 +38,10 @@ module.exports.vehicleModel = mongoose.model('vehicles',new mongoose.Schema({
     },
     price:{
         type:Number
+    },
+    date:{
+        type:Date,
+        default: Date.now
     }
 
 }))

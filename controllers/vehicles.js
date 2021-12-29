@@ -9,6 +9,11 @@ module.exports.getVehicles = async (req, res, next) => {
     try {
         let sort = req.query.sort;
         let cat = {type:req.query.type}
+        let search = req.query.search
+        if(search){
+            search = search.toLowerCase();
+            return res.send(await vehicleModel.find({$or:[{model:search},{brand:search}]}))
+        } 
         if (req.params.id) return res.send(await vehicleModel.find({ _id: req.params.id }))
         if(req.query.sort){
             return res.send(await vehicleModel.find(cat).sort(sort))
