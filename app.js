@@ -10,6 +10,8 @@ const app = express();
 const errorHandler = require('./middlewares/errorHandler');
 const cors  = require('cors');
 const features = require('./router/feature.route')
+
+
 //middleware
 app.use(logger('dev'));
 app.use(express.json());
@@ -29,6 +31,7 @@ app.use('/api/feature',features)
 app.get('/api/:name',async(req , res , next)=>{
      return res.sendFile(__dirname+'/uploads/'+req.params.name)
 })
+
 app.use('/*',(req , res)=>{
      res.sendFile(path.join(__dirname+'/public/trucky/index.html'))
 })

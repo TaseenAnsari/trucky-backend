@@ -1,9 +1,5 @@
 const { vehicleModel } = require('../models/vehicles.model')
-const config = require('config')
-var aws = require('aws-sdk')
-var express = require('express')
-var multer = require('multer')
-var multerS3 = require('multer-s3')
+const {cleaner} = require('../middlewares/cleaner')
 
 
 
@@ -31,7 +27,6 @@ module.exports.getVehicles = async (req, res, next) => {
 module.exports.uploadPhoto = async (req, res, next) => {
     try {
         res.send(req.files)
-    
     }
     catch (err) {
         next(err)
@@ -40,8 +35,9 @@ module.exports.uploadPhoto = async (req, res, next) => {
 
 module.exports.addVehicles = async (req, res, next) => {
     try {
-        console.log(req.file,(req.body))
-        return res.send(await vehicleModel(req.body).save())
+        const vehicle = await vehicleModel(req.body).save()
+        cleaner()
+        return  res.send({status:200,message:"Vehicle add successfully",vehicle:vehicle})
     }
     catch (err) {
         next(err)
@@ -51,6 +47,7 @@ module.exports.addVehicles = async (req, res, next) => {
 module.exports.deleteVehicle = async (payload,req, res, next) => {
     try {
         const post  = await vehicleModel.deleteOne({_id:req.params.id})
+        cleaner()
         return res.send({status:200,message:"delete successfully"})
     }
     catch (err) {
@@ -62,30 +59,11 @@ module.exports.deleteVehicle = async (payload,req, res, next) => {
 module.exports.updateVehicle = async (payload,req, res, next) => {
     try {
         const post  = await vehicleModel.updateOne({_id:req.params.id},{$set:req.body})
-        return res.send(post)
+        cleaner()
+        return res.send({status:200,message:"successfuly Updated",data:post})
     }
     catch (err) {
         next(err)
     }
 }
 
-
-
-var app = express()
-var s3 = new aws.S3({
-    accessKeyId:config.get('awsId'),
-    secretAccessKey:config.get('awsKey')
-})
-
-module.exports.uploads = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: 'truckytruck',
-    metadata: function (req, file, cb) {
-      cb(null, {fieldName: file.fieldname});
-    },
-    key: function (req, file, cb) {
-      cb(null, Date.now()+file.originalname)
-    }
-  })
-})
