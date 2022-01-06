@@ -82,3 +82,12 @@ module.exports.updateContact = async(payload,req ,res ,next)=>{
         next(err)
     }
 }
+
+module.exports.uploadBanner = async (req, res, next) => {
+    try {
+        res.send(req.files)
+    }
+    catch (err) {
+        next(err)
+    }
+}

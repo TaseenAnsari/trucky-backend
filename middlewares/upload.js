@@ -22,3 +22,16 @@ module.exports.uploadVehicleImg = multer({
     }
   })
 })
+
+module.exports.uploadBannerImg = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'truckytruck',
+    metadata: function (req, file, cb) {
+      cb(null, {fieldName: file.fieldname});
+    },
+    key: function (req, file, cb) {
+      cb(null,"banner/"+ Date.now()+file.originalname)
+    }
+  })
+})
