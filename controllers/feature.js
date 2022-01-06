@@ -106,7 +106,7 @@ module.exports.uploadBanner = async (req, res, next) => {
             const ban = await bannerModel.updateOne({_id:req.params.id},{$set:{
                 banner:req.file.key
             }})
-            res.send(banner[0].banner)
+            res.send(banner[0])
         }
     }
     catch (err) {
