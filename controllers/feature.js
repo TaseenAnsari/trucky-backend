@@ -66,7 +66,7 @@ module.exports.addContact = async(payload,req ,res ,next)=>{
         const contact = await contactModel.find({_id:req.params.id})
         if(!req.params.id){
             const con = new contactModel({banner:req.phone})
-            res.send(await ban.save())
+            res.send(await con.save())
         }
         else{
             const ban = await contactModel.updateOne({_id:req.params.id},{$set:{
