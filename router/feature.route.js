@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {addBrand ,updateContact,getBrand,getContact , addContact , deleteBrand ,getCustomers, deleteCustomer, uploadBanner} = require('../controllers/feature')
+const {addBrand ,updateContact,getBrand,getContact , addContact , deleteBrand ,getCustomers, deleteCustomer, uploadBanner, getBanner} = require('../controllers/feature')
 const authentication = require('../middlewares/authentication')
 const {uploadBannerImg} = require('../middlewares/upload')
 
@@ -19,6 +19,8 @@ router.delete('/brand/:id',authentication,deleteBrand)
 router.get('/customers',authentication,getCustomers);
 router.delete('/customers/:id',authentication,deleteCustomer);
 
+
+router.get('/banner',getBanner)
 router.post('/banner/',uploadBannerImg.single('files'),uploadBanner);
 router.post('/banner/:id',uploadBannerImg.single('files'),uploadBanner);
 

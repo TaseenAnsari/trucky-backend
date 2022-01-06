@@ -83,6 +83,18 @@ module.exports.updateContact = async(payload,req ,res ,next)=>{
     }
 }
 
+
+module.exports.getBanner = async(req ,res ,next)=>{
+    try{
+
+        return res.send(await bannerModel.find({}))
+    }   
+    catch(err){
+        next(err)
+    }
+}
+
+
 module.exports.uploadBanner = async (req, res, next) => {
     try {
         const banner = await bannerModel.find({_id:req.params.id})
