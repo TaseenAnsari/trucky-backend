@@ -85,7 +85,6 @@ module.exports.updateContact = async(payload,req ,res ,next)=>{
 
 module.exports.uploadBanner = async (req, res, next) => {
     try {
-        res.send(req.file)
         const banner = await bannerModel.find({_id:req.params.id})
         if(!banner[0].banner){
             const ban = new bannerModel({banner:req.file.key})
