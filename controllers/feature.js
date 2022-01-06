@@ -1,4 +1,5 @@
 const { brandModel , contactModel} = require('../models/feature.model')
+const {customerModel} = require('../models/customers.model')
 
 module.exports.addBrand = async(payload,req ,res ,next)=>{
     try{
@@ -33,8 +34,17 @@ module.exports.deleteBrand = async(payload,req ,res ,next)=>{
 
 module.exports.getContact = async(req ,res ,next)=>{
     try{
-        console.log("yes")
         return res.send(await contactModel.find({}))
+    }   
+    catch(err){
+        next(err)
+    }
+}
+
+module.exports.getCustomers = async(payload,req ,res ,next)=>{
+    try{
+
+        return res.send(await customerModel.find({}))
     }   
     catch(err){
         next(err)
