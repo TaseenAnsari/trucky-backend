@@ -51,6 +51,15 @@ module.exports.getCustomers = async(payload,req ,res ,next)=>{
     }
 }
 
+module.exports.deleteCustomer = async(payload,req ,res ,next)=>{
+    try{
+
+        return res.send(await customerModel.deleteOne({_id:req.params.id}))
+    }   
+    catch(err){
+        next(err)
+    }
+}
 
 module.exports.addContact = async(payload,req ,res ,next)=>{
     try{
