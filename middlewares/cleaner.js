@@ -15,7 +15,7 @@ module.exports.cleaner = async()=>{
         let  imagelist = []
         let s3Imglist = []
         const params = {
-            Bucket: `truckytruck`,
+            Bucket: `truckystruck`,
             Prefix: ''
         };
         s3.listObjects(params, function (err, data) {

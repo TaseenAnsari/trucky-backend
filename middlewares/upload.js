@@ -13,7 +13,7 @@ var s3 = new aws.S3({
 module.exports.uploadVehicleImg = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'truckytruck',
+    bucket: 'truckystruck',
     metadata: function (req, file, cb) {
       cb(null, {fieldName: file.fieldname});
     },
@@ -26,7 +26,7 @@ module.exports.uploadVehicleImg = multer({
 module.exports.uploadBannerImg = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'truckytruck',
+    bucket: 'truckystruck',
     metadata: function (req, file, cb) {
       cb(null, {fieldName: file.fieldname});
     },
