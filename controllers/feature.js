@@ -1,4 +1,4 @@
-const { brandModel , contactModel} = require('../models/feature.model')
+const { brandModel , contactModel, bannerModel} = require('../models/feature.model')
 const {customerModel} = require('../models/customers.model')
 
 module.exports.addBrand = async(payload,req ,res ,next)=>{
@@ -86,6 +86,17 @@ module.exports.updateContact = async(payload,req ,res ,next)=>{
 module.exports.uploadBanner = async (req, res, next) => {
     try {
         res.send(req.file)
+        const banner = await bannerModel.find({_id:req.params.id})
+        if(!banner[0].banner){
+            const ban = new bannerModel({banner:req.file.key})
+            res.send(await ban.save())
+        }
+        else{
+            const ban = await bannerModel.updateOne({_id:req.params.id},{$set:{
+                banner:req.file.key
+            }})
+            res.send(banner[0].banner)
+        }
     }
     catch (err) {
         next(err)

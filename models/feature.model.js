@@ -24,3 +24,10 @@ module.exports.brandModel= mongoose.model('brand',new mongoose.Schema({
     }
 }))
 
+module.exports.bannerModel= mongoose.model('banner',new mongoose.Schema({
+    banner:{
+        type:String,
+        required:true
+    },
+}))
+
