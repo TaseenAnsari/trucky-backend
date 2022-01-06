@@ -35,6 +35,9 @@ module.exports.cleaner = async()=>{
                     if(i==j){
                         flag = 1
                     }
+                    else if(i =='banner'){
+                        flag = 1
+                    }
                 }
                 if(flag == 0){
                     const paramss = {
@@ -44,7 +47,6 @@ module.exports.cleaner = async()=>{
                     s3.deleteObject(paramss,function (err, data) {
                         if (err)
                             throw err
-                        console.log("deleted: "+data)
                     });
                 }
             }
