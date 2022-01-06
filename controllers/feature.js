@@ -63,9 +63,17 @@ module.exports.deleteCustomer = async(payload,req ,res ,next)=>{
 
 module.exports.addContact = async(payload,req ,res ,next)=>{
     try{
-        return res.send(await (new contactModel({
-            phone:req.body.number
-        })).save())
+        const contact = await contactModel.find({_id:req.params.id})
+        if(!req.params.id){
+            const con = new contactModel({banner:req.phone})
+            res.send(await ban.save())
+        }
+        else{
+            const ban = await contactModel.updateOne({_id:req.params.id},{$set:{
+                banner:req.phone
+            }})
+            res.send(contact[0])
+        }
     }   
     catch(err){
         next(err)
@@ -87,7 +95,7 @@ module.exports.updateContact = async(payload,req ,res ,next)=>{
 module.exports.getBanner = async(req ,res ,next)=>{
     try{
 
-        return res.send(await bannerModel.find({}))
+        return res.send(await bannerModel.find(req.params))
     }   
     catch(err){
         next(err)

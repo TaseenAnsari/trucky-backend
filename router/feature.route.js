@@ -19,8 +19,8 @@ router.delete('/brand/:id',authentication,deleteBrand)
 router.get('/customers',authentication,getCustomers);
 router.delete('/customers/:id',authentication,deleteCustomer);
 
-
 router.get('/banner',getBanner)
+router.get('/banner/:id',getBanner)
 router.post('/banner/',uploadBannerImg.single('files'),uploadBanner);
 router.post('/banner/:id',uploadBannerImg.single('files'),uploadBanner);
 
