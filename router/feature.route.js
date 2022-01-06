@@ -8,9 +8,9 @@ router.get('/contact',getContact)
 
 router.post('/contact',authentication,addContact)
 
-router.put('/contact',authentication,updateContact)
+router.put('/contact',authentication,addContact)
 
-router.put('/contact/:id',authentication,updateContact)
+router.put('/contact/:id',authentication,addContact)
 
 router.post('/brand',authentication,addBrand)
 
