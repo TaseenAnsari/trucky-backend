@@ -20,7 +20,7 @@ module.exports.getVehicles = async (req, res, next) => {
                 for (let i of vehicle) {
                     let flag = 0
                     for (let j of searchlist) {
-                        if (j._id === value._id) {
+                        if (j._id === i._id) {
                             flag = 1
                         }
                     }
