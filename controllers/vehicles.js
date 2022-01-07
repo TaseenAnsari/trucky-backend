@@ -20,10 +20,11 @@ module.exports.getVehicles = async (req, res, next) => {
                 vehicle = await vehicleModel.find({ $or: [{ model: i }, { brand: i }] })
                 vehicle.map(value=> searchlist.push(value))
             }
-            searchlist = searchlist.filter(value=>{
-                    if(!searchlist.includes(value)) true
-                    else false
-                })
+            searchlist.map(value=>{
+                for(let i=1;i<searchlist.length;i++){
+                    if(searchlist[i]._id===value._id) searchlist.splice(i+1,1);
+                }
+            })
             return res.send(searchlist)
         }
         if (req.params.id) return res.send(await vehicleModel.find({ _id: req.params.id }))
