@@ -31,7 +31,7 @@ module.exports.getVehicles = async (req, res, next) => {
                         searchlist.push(value)
                     })
             }
-            return res.send(searchlist)
+            return res.send(vehicle)
         } 
         if (req.params.id) return res.send(await vehicleModel.find({ _id: req.params.id }))
         if(req.query.sort){
