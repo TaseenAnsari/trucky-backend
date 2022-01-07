@@ -1,5 +1,5 @@
 const { vehicleModel } = require('../models/vehicles.model')
-const {cleaner} = require('../middlewares/cleaner')
+const { cleaner } = require('../middlewares/cleaner')
 
 
 
@@ -8,26 +8,31 @@ const {cleaner} = require('../middlewares/cleaner')
 module.exports.getVehicles = async (req, res, next) => {
     try {
         let sort = req.query.sort;
-        let cat = {type:req.query.type}
+        let cat = { type: req.query.type }
         let search = req.query.search
-        if(search){
+        if (search) {
             let vehicle = []
             let searchlist = []
             search = search.toLowerCase();
             search = search.split(' ');
-            for(let i of search){
-               vehicle =  await vehicleModel.find({$or:[{model:i},{brand:i}]})
-               vehicle.map( value => {
-                for(let j of searchlist){
-                        if(j._id === value._id) return
+            for (let i of search) {
+                vehicle = await vehicleModel.find({ $or: [{ model: i }, { brand: i }] })
+                for (let i of vehicle) {
+                    let flag = 0
+                    for (let j of searchlist) {
+                        if (j._id === value._id) {
+                            flag = 1
+                        }
                     }
+                    if (flag == 0) {
                         searchlist.push(value)
-                    })
+                    }
+                }
             }
             return res.send(searchlist)
-        } 
+        }
         if (req.params.id) return res.send(await vehicleModel.find({ _id: req.params.id }))
-        if(req.query.sort){
+        if (req.query.sort) {
             return res.send(await vehicleModel.find(cat).sort(sort))
         }
         return res.send(await vehicleModel.find(cat))
@@ -49,18 +54,18 @@ module.exports.addVehicles = async (req, res, next) => {
     try {
         const vehicle = await vehicleModel(req.body).save()
         cleaner()
-        return  res.send({status:200,message:"Vehicle add successfully",vehicle:vehicle})
+        return res.send({ status: 200, message: "Vehicle add successfully", vehicle: vehicle })
     }
     catch (err) {
         next(err)
     }
 }
 
-module.exports.deleteVehicle = async (payload,req, res, next) => {
+module.exports.deleteVehicle = async (payload, req, res, next) => {
     try {
-        const post  = await vehicleModel.deleteOne({_id:req.params.id})
+        const post = await vehicleModel.deleteOne({ _id: req.params.id })
         cleaner()
-        return res.send({status:200,message:"delete successfully"})
+        return res.send({ status: 200, message: "delete successfully" })
     }
     catch (err) {
         next(err)
@@ -68,11 +73,11 @@ module.exports.deleteVehicle = async (payload,req, res, next) => {
 }
 
 
-module.exports.updateVehicle = async (payload,req, res, next) => {
+module.exports.updateVehicle = async (payload, req, res, next) => {
     try {
-        const post  = await vehicleModel.updateOne({_id:req.params.id},{$set:req.body})
+        const post = await vehicleModel.updateOne({ _id: req.params.id }, { $set: req.body })
         cleaner()
-        return res.send({status:200,message:"successfuly Updated",data:post})
+        return res.send({ status: 200, message: "successfuly Updated", data: post })
     }
     catch (err) {
         next(err)
