@@ -11,11 +11,12 @@ module.exports.getVehicles = async (req, res, next) => {
         let cat = {type:req.query.type}
         let search = req.query.search
         if(search){
+            let vehicle = []
             let searchlist = []
             search = search.toLowerCase();
             search = search.split(' ');
             for(let i of search){
-               let vehicle =  await vehicleModel.find({$or:[{model:i},{brand:i}]})
+               vehicle =  await vehicleModel.find({$or:[{model:i},{brand:i}]})
                vehicle.map( value => {
                     for(let j of searchlist){
                         if(j._id === value._id) return
