@@ -14,9 +14,10 @@ module.exports.getVehicles = async (req, res, next) => {
             let searchlist = []
             search = search.toLowerCase();
             search = search.split(' ');
-            return res.send(search)
             for(let i of search){
-                await vehicleModel.find({$or:[{model:i},{brand:i}]}).map( value => {
+               let vehicle =  await vehicleModel.find({$or:[{model:i},{brand:i}]})
+            return res.send(vehicle)
+               vehicle.map( value => {
                     for(let j of searchlist){
                         if(j._id === value._id) return
                     }
