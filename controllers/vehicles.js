@@ -17,6 +17,7 @@ module.exports.getVehicles = async (req, res, next) => {
             search = search.split(' ');
             for(let i of search){
                vehicle =  await vehicleModel.find({model:i})
+               return res.send(vehicle)
                vehicle.map( value => {
                 for(let j of searchlist){
                         if(j._id === value._id) return
