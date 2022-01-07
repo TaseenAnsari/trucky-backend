@@ -21,12 +21,12 @@ module.exports.getVehicles = async (req, res, next) => {
                 vehicle.map(value=> searchlist.push(value))
             }
             searchlist.map(value=>{
+                flag = 0
                 for(let i=1;i<searchlist.length;i++){
-                    if(searchlist[i]._id===value._id) continue
+                    if(searchlist[i]._id===value._id) searchlist.splice(i,1);
                 }
-                finalsearch.push(value)
             })
-            return res.send(finalsearch)
+            return res.send(searchlist)
         }
         if (req.params.id) return res.send(await vehicleModel.find({ _id: req.params.id }))
         if (req.query.sort) {
