@@ -22,7 +22,7 @@ module.exports.getVehicles = async (req, res, next) => {
             }
             searchlist.map(value=>{
                 for(let i=1;i<searchlist.length;i++){
-                    if(searchlist[i]._id===value._id) return
+                    if(searchlist[i]._id===value._id) continue
                 }
                 finalsearch.push(value)
             })
