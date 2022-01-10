@@ -48,6 +48,7 @@ module.exports.uploadPhoto = async (req, res, next) => {
 
 module.exports.addVehicles = async (req, res, next) => {
     try {
+        req.body.model = req.body.model.toLowerCase();
         const vehicle = await vehicleModel(req.body).save()
         cleaner()
         return res.send({ status: 200, message: "Vehicle add successfully", vehicle: vehicle })
