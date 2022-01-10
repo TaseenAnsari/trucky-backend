@@ -4,7 +4,7 @@ const {customerModel} = require('../models/customers.model')
 module.exports.addBrand = async(payload,req ,res ,next)=>{
     try{
         return res.send(await (new brandModel({
-            brand:req.body.brand,
+            brand:req.body.brand.toLowerCase(),
             type:req.body.type
         })).save())
     }   
